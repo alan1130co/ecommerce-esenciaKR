@@ -307,26 +307,42 @@ function calculateTotal() {
 
 function updateCartCounter() {
     const counter = document.getElementById('cart-counter');
-    if (counter) {
-        const totalItems = cartItems.reduce((total, item) => {
-            const quantity = parseInt(item.quantity) || 1;
-            return total + quantity;
-        }, 0);
+    
+    if (!counter) {
+        console.warn('⚠️ Elemento cart-counter no encontrado');
+        return;
+    }
+    
+    // Calcular total de items correctamente
+    const totalItems = cartItems.reduce((total, item) => {
+        const quantity = parseInt(item.quantity) || 0;
+        return total + quantity;
+    }, 0);
+    
+    console.log(`🔢 Total items en carrito: ${totalItems}`);
+    
+    if (totalItems > 0) {
+        // Mostrar número de productos
+        counter.textContent = totalItems > 99 ? '99+' : totalItems.toString();
+        counter.style.display = 'flex';
+        counter.style.opacity = '1';
         
-        if (totalItems > 0) {
-            counter.textContent = totalItems > 99 ? '99+' : totalItems;
-            counter.style.display = 'flex';
-            
-            if (!counter.classList.contains('cart-counter-pulse')) {
-                counter.classList.add('cart-counter-pulse');
-            }
-        } else {
-            counter.style.display = 'none';
-            counter.classList.remove('cart-counter-pulse');
+        // Animación de pulso
+        if (!counter.classList.contains('cart-counter-pulse')) {
+            counter.classList.add('cart-counter-pulse');
         }
+        
+        console.log(`✅ Contador actualizado: ${counter.textContent}`);
+    } else {
+        // Ocultar cuando está vacío
+        counter.textContent = '0';
+        counter.style.display = 'none';
+        counter.style.opacity = '0';
+        counter.classList.remove('cart-counter-pulse');
+        
+        console.log('🔄 Carrito vacío, contador oculto');
     }
 }
-
 // =============================================
 // 6. RENDERIZADO MEJORADO DE LA PÁGINA
 // =============================================
