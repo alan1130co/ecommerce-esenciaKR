@@ -1,0 +1,30 @@
+ /* ===================================
+   FIX: Badge de descuento en productos
+   =================================== */
+
+/* Asegurar que el contenedor de la imagen sea relativo */
+#main-image {
+    position: relative !important;
+}
+
+/* Forzar posición del badge DENTRO de la imagen del producto */
+#main-image > .absolute {
+    position: absolute !important;
+    top: 1rem !important;
+    left: 1rem !important;  /* Esquina superior izquierda */
+    z-index: 10 !important;
+}
+
+/* Si prefieres el badge en la esquina derecha, usa esto en su lugar:
+#main-image > .absolute {
+    position: absolute !important;
+    top: 1rem !important;
+    right: 1rem !important;
+    z-index: 10 !important;
+}
+*/
+
+/* Prevenir que badges aparezcan sobre el header */
+header .absolute {
+    position: relative !important;
+}

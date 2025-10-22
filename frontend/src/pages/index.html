@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <!-- Configuración básica -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO y descripción -->
+  <title> esenciaperfumeriaKR - Tu tienda de tecnología online</title>
+  <meta name="description" content="Encuentra los mejores laptops, celulares y componentes PC al mejor precio" />
+
+  <!-- Conectar TailwindCSS LOCAL (ajustado a tu estructura) -->
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <!-- Fallback CDN si el CSS local no funciona -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Verificar si Tailwind se cargó correctamente
+      const testElement = document.createElement('div');
+      testElement.className = 'bg-blue-500';
+      document.body.appendChild(testElement);
+
+      const computedStyle = window.getComputedStyle(testElement);
+      if (computedStyle.backgroundColor === 'rgb(0, 0, 0)' || computedStyle.backgroundColor === 'transparent') {
+        // Si Tailwind no se cargó, usar CDN
+        const script = document.createElement('script');
+        script.src = 'https://cdn.tailwindcss.com';
+        document.head.appendChild(script);
+        console.warn('CSS local no encontrado, usando Tailwind CDN');
+      }
+
+      document.body.removeChild(testElement);
+    });
+  </script>
+</head>
+<body class="bg-gray-50 font-sans">
+  <!-- Aquí irá todo el contenido -->
+
+  <!-- Header/Navegación -->
+  <header class="bg-gray-900 shadow-2x1 border-b-4 border-purple-500 sticky top-0 z-50">
+    <nav class="container mx-auto px-5 py-7">
+      <div class="flex justify-between items-center">
+        <div class="text-2xl font-bold text-purple-600 hover:text-purple-400 hover:scale-green-300 transition-colors duration-400">
+          <a href="index.html">EsenciaPerfumeriaKR</a>
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-6">
+          <a href="index.html" class="text-purple-600 font-medium">Inicio</a>
+          <a href="productos.html" class="text-white hover:text-purple-600 font-medium">Productos</a>
+          <a href="#categorias" class="text-white hover:text-purple-600 font-medium">Categorías</a>
+          <a href="#contacto" class="text-white hover:text-purple-600 font-medium">Contacto</a>
+        </div>
+
+         <!-- Carrito -->
+                    <a href="carrito.html" class="relative text-white hover:text-blue-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.1 5M7 13l-1.1 5m0 0h3.1M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
+                        </svg>
+                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1" id="cart-counter">0</span>
+                    </a>
+          <!-- Mobile menu button -->
+          <button class="md:hidden text-gray-700 hover:text-blue-600" id="mobile-menu-button">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Menu -->
+      <div class="md:hidden mt-4 hidden" id="mobile-menu">
+        <div class="flex flex-col space-y-2 pb-4">
+          <a href="index.html" class="text-gray-700 hover:text-blue-600 py-2">Inicio</a>
+          <a href="productos.html" class="text-gray-700 hover:text-blue-600 py-2">Productos</a>
+          <a href="#categorias" class="text-gray-700 hover:text-blue-600 py-2">Categorías</a>
+          <a href="#contacto" class="text-gray-700 hover:text-blue-600 py-2">Contacto</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+
+  <!-- Contenido principal -->
+<main>
+      <div class=""></div>  
+      <!--Hero Section-->
+<section class="hero bg-gradient-to-r from-blue-700 via-purple-600 to-indigo-600 text-white py-24 relative max-w-screen-2xl mx-auto rounded-2xl shadow-xl overflow-hidden mt-2" 
+  style="background-image: url(../assets/images/london-uk-february-10th-2021-600nw-1914089896.webp); background-position: 20%;" 
+  width="1766px" height="372px">
+    
+    <div class="absolute inset-0 bg-black opacity-10"></div>
+    <div class="container mx-auto px-4 text-center relative z-10 space-y-28">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in ">
+                    Perfumería  <span class="text-purple-500  hover:text-purple-200 hover:scale-green-300 transition-colors duration-200"> Árabe & de Diseñador</span>
+      <br>
+                  </h1>
+                  <span class="text-xl md:text-2xl mb-8 opacity-90">
+      <p class="text-xl md:text-2xl mb-8 text-color-white-">
+                   Lujo en cada gota.
+      </p>
+      </span>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="productos.html" class="bg-white text-purple-600 px-8 py-4 rounded-lg text-lg font-semibold 
+                    hover:bg-gray-100 transition duration-300 transform hover:scale-105">
+                    Ver Productos</a>
+                    <button class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold
+                    hover:bg-white hover:text-purple-800 transition duration-300">
+                        Ofertas Especiales
+                    </button>
+        </div>
+      </div>
+            <!--banner principal-->
+            <div class="absolute top-10 left-10 text-6xl opacity-20 animate-pulse"></div>
+            <div class="absolute bottom-10 right-10 text-6xl opacity-20 animate-pulse"></div>
+          
+            
+        </section>
+          
+      <!-- Banner principal -->
+    
+
+    <!-- Categorías -->
+    <section id="categorias" class="categorias py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">Nuestras Categorías</h2>
+        <p class="text-gray-600 text-lg">Explora el mundo de las fragancias originales</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- CATEGORÍA 1: Perfumes Árabes -->
+        <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 cursor-pointer category-card" data-category="arabes">
+            <div class="text-6xl mb-6 filter drop-shadow-lg">🧴🕌</div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">Perfumes Árabes</h3>
+            <p class="text-gray-600 mb-6">Aromas intensos, cálidos y exóticos del Medio Oriente.</p>
+            <div class="text-purple-700 font-semibold">Ver más →</div>
+        </div>
+
+        <!-- CATEGORÍA 2: Perfumes de Diseñador -->
+        <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 cursor-pointer category-card" data-category="disenador">
+            <div class="text-6xl mb-6 filter drop-shadow-lg">🧴✨</div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">Perfumes de Diseñador</h3>
+            <p class="text-gray-600 mb-6">Fragancias de lujo de las casas de moda más exclusivas.</p>
+            <div class="text-purple-700 font-semibold">Ver más →</div>
+        </div>
+
+        <!-- CATEGORÍA 3: Unisex -->
+        <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 cursor-pointer category-card" data-category="unisex">
+            <div class="text-6xl mb-6 filter drop-shadow-lg">💫</div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800"> Perfumes Unisex</h3>
+            <p class="text-gray-600 mb-6">Aromas versátiles que rompen barreras de género.</p>
+            <div class="text-purple-700 font-semibold">Ver más →</div>
+        </div>
+
+        <!-- CATEGORÍA 4: Florales -->
+        <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 cursor-pointer category-card" data-category="florales">
+            <div class="text-6xl mb-6 filter drop-shadow-lg">🚀✨</div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">nuevos lanzamientos</h3>
+            <p class="text-gray-600 mb-6">Perfumes recién llegados, exclusivos y con las últimas tendencias del mercado.</p>
+            <div class="text-purple-700 font-semibold">Ver más →</div>
+        </div>
+
+        <!-- CATEGORÍA 5: Amaderados -->
+        <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 cursor-pointer category-card" data-category="amaderados">
+            <div class="text-6xl mb-6 filter drop-shadow-lg">🏷️</div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">Ofertas</h3>
+            <p class="text-gray-600 mb-6">Aprovecha descuentos únicos en tus fragancias favoritas.</p>
+            <div class="text-purple-700 font-semibold">Ver más →</div>
+        </div>
+
+        <!-- CATEGORÍA 6: Exclusivos -->
+        <div class="bg-white p-8 rounded-xl shadow-lg text-center hover:shadow-2xl transition duration-300 transform hover:-translate-y-2 cursor-pointer category-card" data-category="exclusivos">
+            <div class="text-6xl mb-6 filter drop-shadow-lg">👑</div>
+            <h3 class="text-2xl font-bold mb-4 text-gray-800">perfumes exclusivos</h3>
+            <p class="text-gray-600 mb-6">Perfumes únicos y de edición limitada, para gustos exigentes.</p>
+            <div class="text-purple-700 font-semibold">Ver más →</div>
+        </div>
+
+    </div>
+</div>
+    </section>
+
+    <!-- Productos destacados -->
+    <section class="productos-destacados py-16 bg-white">.
+      <div class="container mx-auto px-4">
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold mb-4">Productos Destacados</h2>
+        <p class="text-gray-600 text-lg">Los productos más comprado de nuestra tienda</p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="productos-grid">
+        
+        <!-- PRODUCTO 1: Khamrah Lattafa -->
+        <div class="border rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card">
+            <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-64 flex items-center justify-center relative overflow-hidden">
+                <img src="../assets/images/Lattafa-Khamrah-Qahwa.webp" alt="Khamrah Lattafa Perfumes" class="w-full h-full object-cover">
+                <div class="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-bold">
+                    -25%
+                </div>
+            </div>
+            <div class="p-6">
+                <h3 class="font-bold text-xl mb-2 text-gray-800">Khamrah Lattafa Perfumes-100ml</h3>
+                <p class="text-gray-600 mb-4">Lujoso perfume unisex oriental especiado con notas amaderadas y la suavidad de la vainilla.</p>
+                <div class="flex items-center mb-4">
+                    <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+                    <span class="text-gray-500 text-sm ml-2">(150 reseñas)</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-500 line-through text-sm">$600.000 COP</span>
+                        <span class="text-3xl font-bold text-blue-500 ml-2">$450.000 COP</span>
+                    </div>
+                    <button class="bg-purple-700 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition add-to-cart-btn" 
+                            data-id="khamrah-1" data-product="Khamrah Lattafa Perfumes" data-price="450000">
+                        Comprar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCTO 2: Acqua Di Gio -->
+        <div class="border rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card">
+            <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-64 flex items-center justify-center relative overflow-hidden">
+                <img src="../assets/images/perfume-giorgio-armani-acqua-di-gio-2024-edt-m-50-ml-1-prive-perfumes.webp" alt="Perfume Acqua Di Gio Giorgio Armani" class="w-full h-full object-cover">
+                <div class="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-bold">
+                    -10%
+                </div>
+            </div>
+            <div class="p-6">
+                <h3 class="font-bold text-xl mb-2 text-gray-800">Perfume Acqua Di Gio Giorgio Armani-125ml</h3>
+                <p class="text-gray-600 mb-4">Es una fragancia para hombre refrescante con una combinación cítrica y acuática.</p>
+                <div class="flex items-center mb-4">
+                    <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+                    <span class="text-gray-500 text-sm ml-2">(175 reseñas)</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-500 line-through text-sm">$900.000 COP</span>
+                        <span class="text-3xl font-bold text-blue-500 ml-2">$810.000 COP</span>
+                    </div>
+                    <button class="bg-purple-700 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition add-to-cart-btn" 
+                            data-id="acqua-gio-2" data-product="Perfume Acqua Di Gio Giorgio Armani" data-price="810000">
+                        Comprar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PRODUCTO 3: Le Labo Santal 33 -->
+        <div class="border rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 product-card">
+            <div class="bg-gradient-to-br from-gray-100 to-gray-200 h-64 flex items-center justify-center relative overflow-hidden">
+                <img src="../assets/images/33_2.webp" alt="Le Labo Santal 33 Eau de Parfum" class="w-full h-full object-cover">
+                <div class="absolute top-4 right-4 bg-red-500 text-white px-2 py-1 rounded-full text-sm font-bold">
+                    -15%
+                </div>
+            </div>
+            <div class="p-6">
+                <h3 class="font-bold text-xl mb-2 text-gray-800">Le Labo Santal 33 Eau de Parfum-100ml</h3>
+                <p class="text-gray-600 mb-4">Es una explosión de notas de cedro, cardamomo e iris, lo que hace una sofisticación rica y elegante.</p>
+                <div class="flex items-center mb-4">
+                    <div class="flex text-yellow-400">⭐⭐⭐⭐⭐</div>
+                    <span class="text-gray-500 text-sm ml-2">(200 reseñas)</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <span class="text-gray-500 line-through text-sm">$1.100.000 COP</span>
+                        <span class="text-3xl font-bold text-blue-500 ml-2">$935.000 COP</span>
+                    </div>
+                    <button class="bg-purple-700 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition add-to-cart-btn" 
+                            data-id="le-labo-3" data-product="Le Labo Santal 33 Eau de Parfum" data-price="935000">
+                        Comprar
+                    </button>
+                </div>
+            </div>
+        </div>
+          
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-purple-600">
+      <!-- Newsletter -->
+    </section>
+  </main>
+
+  <!-- Footer -->
+ <footer id="contacto" class="bg-gray-900 text-white py-12">
+  <!-- Links y información -->
+  <div class="container mx-auto px-4">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <!-- Información de contacto -->
+      <div class="text-center md:text-left mb-6 md:mb-0">
+        <p>&copy; 2023 EsenciaPerfumeriaKR. Todos los derechos reservados.</p>
+        <p class="mt-2">Dirección: Calle 1 #2-40, Cartagena de Indias, Colombia</p>
+        <p class="mt-1">Teléfono: +57 3007607645 </p>
+        <p class="mt-1">Email: <a href="mailto:info@esenciaperfumeriakr.com" class="underline text-blue-400">info@esenciaperfumeriakr.com</a></p>
+      </div>
+
+      <!-- Enlaces y redes sociales -->
+      <div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8">
+        <!-- Enlaces legales -->
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white">Política de privacidad</a>
+          <a href="#" class="text-gray-400 hover:text-white">Términos de servicio</a>
+          <a href="#" class="text-gray-400 hover:text-white">Contacto</a>
+        </div>
+  <!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- Redes sociales con enlaces -->
+<a href="https://facebook.com/TU_USUARIO" target="_blank">
+  <i class="fab fa-facebook" style="font-size:30px; color:#1877F2; margin: 0 10px;"></i>
+</a>
+
+<a href="https://www.tiktok.com/@TU_USUARIO" target="_blank">
+  <i class="fab fa-tiktok" style="font-size:30px; color:#FFFFFF; margin: 0 10px;"></i>
+</a>
+
+<a href="https://instagram.com/TU_USUARIO" target="_blank">
+  <i class="fab fa-instagram" style="font-size:30px; color:#E1306C; margin: 0 10px;"></i>
+</a>
+
+<a href="https://x.com/TU_USUARIO" target="_blank">
+  <i class="fab fa-x-twitter" style="font-size:30px; color:#FFFFFF; margin: 0 10px;"></i>
+</a>
+
+  </footer>
+   <!-- JavaScript mejorado -->
+    <script src="../scripts/carrito.js"></script>
+    <script src="../scripts/main.js"></script>
+
+    <!-- Script principal corregido -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    console.log('Index.html iniciado');
+    
+    // Mapeo fijo de imágenes por ID de producto
+    const imageMap = {
+        'khamrah-1': '../assets/images/Lattafa-Khamrah-Qahwa.webp',
+        'acqua-gio-2': '../assets/images/perfume-giorgio-armani-acqua-di-gio-2024-edt-m-50-ml-1-prive-perfumes.webp',
+        'le-labo-3': '../assets/images/33_2.webp'
+    };
+    
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const id = this.dataset.id;
+            const name = this.dataset.product;
+            const price = parseInt(this.dataset.price);
+            
+            // Usar imagen del mapeo fijo (sin buscar en DOM)
+            const image = imageMap[id] || '../assets/images/default-perfume.jpg';
+            
+            const product = {
+                id: id,
+                name: name,
+                price: price,
+                quantity: 1,
+                image: image
+            };
+            
+            console.log('Producto con imagen fija:', product);
+            
+            // Agregar al carrito
+            window.carrito.agregarProducto(product);
+            
+            // Feedback visual
+            this.textContent = '¡Agregado!';
+            this.style.backgroundColor = '#10b981';
+            
+            setTimeout(() => {
+                this.textContent = 'Comprar';
+                this.style.backgroundColor = '';
+            }, 2000);
+        });
+    });
+    
+    // Categorías clickeables
+    document.querySelectorAll('.category-card').forEach(card => {
+        card.addEventListener('click', function() {
+            window.location.href = 'productos.html';
+        });
+    });
+    
+    // Efecto paralaje
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.hero');
+        if (hero && scrolled < hero.offsetHeight) {
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    });
+});
+    </script>  
+</body>
+</html>
