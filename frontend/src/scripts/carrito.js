@@ -343,6 +343,7 @@ function updateCartCounter() {
         console.log('🔄 Carrito vacío, contador oculto');
     }
 }
+
 // =============================================
 // 6. RENDERIZADO MEJORADO DE LA PÁGINA
 // =============================================
@@ -573,6 +574,7 @@ function showMessage(element, message, type) {
 function setupEventListeners() {
     console.log('🔧 Configurando event listeners mejorados...');
     
+    // Aplicar código de descuento
     const applyPromoBtn = document.getElementById('apply-promo');
     const promoCodeInput = document.getElementById('promo-code');
     
@@ -595,25 +597,23 @@ function setupEventListeners() {
                 }
             }
         });
-        
-        promoCodeInput.addEventListener('input', (e) => {
-            const value = e.target.value.toUpperCase();
-            const codes = Object.keys(CART_CONFIG.promoCodes);
-            const matches = codes.filter(code => code.startsWith(value));
-        });
     }
     
+    // Botón de checkout con redirección CORREGIDA
     const checkoutBtn = document.getElementById('checkout-btn');
     if (checkoutBtn) {
         checkoutBtn.addEventListener('click', () => {
+            // Validar que hay productos
             if (cartItems.length === 0) {
                 showNotification('Tu carrito está vacío', 'warning');
                 return;
             }
             
+            // Animación de carga
             checkoutBtn.classList.add('loading');
             checkoutBtn.innerHTML = '<span>Procesando...</span>';
             
+            // Preparar datos del pedido
             const orderData = {
                 items: cartItems,
                 subtotal: calculateSubtotal(),
@@ -626,10 +626,25 @@ function setupEventListeners() {
                 customerData: {}
             };
             
-            console.log('📋 Datos del pedido:', orderData);
-            showNotification('Redirigiendo a checkout...', 'info');
+            console.log('📋 Datos del pedido preparados:', orderData);
             
-            setTimeout(() => {
+            // Guardar datos del pedido en localStorage
+            try {
+                localStorage.setItem('pending-order', JSON.stringify(orderData));
+                localStorage.setItem('checkout-cart', JSON.stringify(cartItems));
+                
+                showNotification('Redirigiendo a checkout...', 'info');
+                
+                // Redireccionar después de 1 segundo
+                setTimeout(() => {
+                    window.location.href = 'checkout.html';
+                }, 1000);
+                
+            } catch (error) {
+                console.error('❌ Error guardando datos del pedido:', error);
+                showNotification('Error al procesar el pedido', 'error');
+                
+                // Restaurar botón
                 checkoutBtn.classList.remove('loading');
                 checkoutBtn.innerHTML = `
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -637,12 +652,11 @@ function setupEventListeners() {
                     </svg>
                     Proceder al Checkout
                 `;
-                
-                alert(`🛒 CHECKOUT SIMULADO\n\n💰 Total: ${formatPrice(orderData.total)}\n📦 Productos: ${cartItems.length}\n${appliedPromo ? `🏷️ Descuento: ${appliedPromo.value}${appliedPromo.type === 'percentage' ? '%' : ''}\n` : ''}🚚 Envío: ${orderData.shipping === 0 ? 'Gratis' : formatPrice(orderData.shipping)}\n\n✨ En las siguientes sesiones implementaremos Stripe para pagos reales.`);
-            }, 2000);
+            }
         });
     }
     
+    // Botón vaciar carrito
     const clearBtn = document.createElement('button');
     clearBtn.textContent = 'Vaciar Carrito';
     clearBtn.className = 'mt-2 text-sm text-gray-500 hover:text-red-600 transition-colors duration-200';
@@ -655,10 +669,8 @@ function setupEventListeners() {
     console.log('✅ Event listeners configurados correctamente');
 }
 
-
-
 // =============================================
-// 10. OBJETO CARRITO GLOBAL PARA COMPATIBILIDAD
+// 9. OBJETO CARRITO GLOBAL PARA COMPATIBILIDAD
 // =============================================
 
 window.carrito = {
@@ -698,7 +710,7 @@ window.carrito = {
 };
 
 // =============================================
-// 11. INICIALIZACIÓN COMPLETA MEJORADA
+// 10. INICIALIZACIÓN COMPLETA MEJORADA
 // =============================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -717,6 +729,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         updateCartCounter();
         
+        // Sincronización entre pestañas
         window.addEventListener('storage', (e) => {
             if (e.key === CART_CONFIG.storage.cartKey) {
                 loadCart();
@@ -728,6 +741,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
         
+        // Evento personalizado de actualización
         window.addEventListener('cartUpdated', (e) => {
             console.log('🔄 Carrito actualizado:', e.detail);
             updateCartCounter();
@@ -736,23 +750,16 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('✅ Sistema de carrito inicializado correctamente');
         console.log(`📊 Estado: ${cartItems.length} productos, total: ${formatPrice(calculateTotal())}`);
         
-        if (window.location.pathname.includes('carrito.html') && cartItems.length === 0) {
-            console.log('%c💡 FUNCIONES DE TESTING DISPONIBLES:', 'color: #10B981; font-weight: bold; font-size: 16px;');
-            console.log('%c   cartDebug.addTestProducts() - Agregar 3 productos premium', 'color: #6B7280; font-size: 14px;');
-            console.log('%c   cartDebug.addSingleTestProduct() - Agregar 1 producto aleatorio', 'color: #6B7280; font-size: 14px;');
-            console.log('%c   cartDebug.simulateUserInteraction() - Simulación completa de usuario', 'color: #6B7280; font-size: 14px;');
-            console.log('%c   cartDebug.clearCart() - Vaciar carrito', 'color: #6B7280; font-size: 14px;');
-            console.log('%c   cartDebug.testAnimations() - Probar animaciones', 'color: #6B7280; font-size: 14px;');
-            console.log('%c   cartDebug.toggleAnimations() - Activar/desactivar animaciones', 'color: #6B7280; font-size: 14px;');
-        }
-        
     } catch (error) {
         console.error('❌ Error inicializando carrito:', error);
         showNotification('Error inicializando carrito', 'error');
     }
 });
 
-// Funciones globales adicionales para compatibilidad
+// =============================================
+// 11. FUNCIONES GLOBALES ADICIONALES
+// =============================================
+
 window.updateCartDisplay = updateCartCounter;
 window.getCartItemCount = () => cartItems.reduce((total, item) => total + (parseInt(item.quantity) || 1), 0);
 window.getCartTotal = () => calculateTotal();
@@ -765,43 +772,146 @@ window.refreshCart = () => {
     }
 };
 
+// =============================================
+// 12. FUNCIONES DE DEBUGGING Y TESTING
+// =============================================
+
+window.cartDebug = {
+    // Ver estado actual del carrito
+    getState: function() {
+        return {
+            items: cartItems,
+            count: cartItems.length,
+            subtotal: calculateSubtotal(),
+            shipping: calculateShipping(calculateSubtotal()),
+            taxes: calculateTaxes(calculateSubtotal()),
+            discount: calculateDiscount(calculateSubtotal()),
+            total: calculateTotal(),
+            appliedPromo: appliedPromo,
+            config: CART_CONFIG
+        };
+    },
+    
+    // Agregar productos de prueba
+    addTestProducts: function() {
+        const testProducts = [
+            {
+                id: 'test-1',
+                name: 'Perfume Luxury Essence',
+                price: 150000,
+                quantity: 1,
+                image: '../assets/images/perfume1.jpg'
+            },
+            {
+                id: 'test-2',
+                name: 'Fragancia Premium Rose',
+                price: 95000,
+                quantity: 2,
+                image: '../assets/images/perfume2.jpg'
+            },
+            {
+                id: 'test-3',
+                name: 'Colonia Midnight Dreams',
+                price: 120000,
+                quantity: 1,
+                image: '../assets/images/perfume3.jpg'
+            }
+        ];
+        
+        testProducts.forEach(product => window.addToCart(product));
+        console.log('✅ Productos de prueba agregados');
+        return this.getState();
+    },
+    
+    // Agregar un solo producto de prueba
+    addSingleTestProduct: function() {
+        const product = {
+            id: `test-${Date.now()}`,
+            name: `Perfume Test ${Math.floor(Math.random() * 100)}`,
+            price: Math.floor(Math.random() * 100000) + 50000,
+            quantity: 1,
+            image: '../assets/images/default-perfume.jpg'
+        };
+        
+        window.addToCart(product);
+        console.log('✅ Producto de prueba agregado:', product);
+        return this.getState();
+    },
+    
+    // Simular interacción de usuario
+    simulateUserInteraction: function() {
+        console.log('🎭 Iniciando simulación de usuario...');
+        
+        this.addTestProducts();
+        
+        setTimeout(() => {
+            console.log('🎟️ Aplicando código de descuento...');
+            applyPromoCode('BIENVENIDO');
+        }, 2000);
+        
+        setTimeout(() => {
+            console.log('➕ Aumentando cantidad del primer producto...');
+            if (cartItems.length > 0) {
+                updateQuantity(cartItems[0].id, cartItems[0].quantity + 1);
+            }
+        }, 4000);
+        
+        setTimeout(() => {
+            console.log('✅ Simulación completada');
+            console.table(this.getState());
+        }, 6000);
+        
+        return 'Simulación en progreso...';
+    },
+    
+    // Vaciar carrito de prueba
+    clearCart: function() {
+        cartItems = [];
+        appliedPromo = null;
+        saveCart();
+        renderCartPage();
+        console.log('🗑️ Carrito vaciado');
+        return this.getState();
+    },
+    
+    // Probar animaciones
+    testAnimations: function() {
+        const testDiv = document.createElement('div');
+        testDiv.className = 'fixed top-20 right-4 bg-blue-500 text-white p-4 rounded-lg z-50';
+        testDiv.textContent = '✨ Probando animaciones';
+        document.body.appendChild(testDiv);
+        
+        animateElement(testDiv, 'fadeIn');
+        
+        setTimeout(() => {
+            testDiv.style.transform = 'translateX(100%)';
+            testDiv.style.opacity = '0';
+            setTimeout(() => testDiv.remove(), 300);
+        }, 3000);
+        
+        return 'Animación de prueba ejecutada';
+    },
+    
+    // Activar/desactivar animaciones
+    toggleAnimations: function() {
+        CART_CONFIG.animations.enabled = !CART_CONFIG.animations.enabled;
+        console.log(`Animaciones ${CART_CONFIG.animations.enabled ? 'activadas' : 'desactivadas'}`);
+        return CART_CONFIG.animations.enabled;
+    },
+    
+    // Ver códigos promocionales
+    showPromoCodes: function() {
+        console.table(CART_CONFIG.promoCodes);
+        return CART_CONFIG.promoCodes;
+    },
+    
+    // Aplicar promo directamente
+    applyPromo: function(code) {
+        applyPromoCode(code);
+        return this.getState();
+    }
+};
+
 console.log('✅ Objeto window.carrito creado para compatibilidad');
 console.log('🎉 carrito.js MEJORADO cargado exitosamente ✅');
 
-// =============================================
-// 12. PERSONALIZACIÓN Y CONFIGURACIÓN FINAL
-// =============================================
-
-/*
-CARRITO.JS COMPLETAMENTE CORREGIDO - VERSIÓN FINAL
-
-CORRECCIONES APLICADAS:
-✅ Línea 155: image: product.image (sin fallback que sobrescriba)
-✅ Línea 749: image: producto.image (sin fallback que sobrescriba)  
-✅ Línea 367: onerror con imagen local (sin Unsplash)
-
-PROBLEMA RESUELTO:
-- Las imágenes ahora se conservan correctamente desde index.html
-- No más sobrescritura con URLs de Unsplash
-- Cada producto mantiene su imagen real
-
-FUNCIONALIDADES COMPLETAS:
-- Sistema de carrito unificado
-- Validaciones automáticas
-- Notificaciones visuales
-- Cálculos correctos
-- Compatibilidad total entre páginas
-- Debugging avanzado
-
-CÓDIGOS DE DESCUENTO:
-- DESCUENTO10 (10% - mín. $50,000)
-- ENVIOGRATIS (Envío gratis - mín. $30,000)
-- BIENVENIDO (15% - mín. $80,000)  
-- TECHPRO20 (20% - mín. $100,000)
-- PRIMERACOMPRA (12% - mín. $40,000)
-
-TESTING DISPONIBLE:
-- cartDebug.addTestProducts()
-- cartDebug.clearCart()
-- cartDebug.testAnimations()
-*/

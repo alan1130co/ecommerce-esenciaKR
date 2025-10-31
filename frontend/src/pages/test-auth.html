@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Auth API - TechStore Pro</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+
+    <!-- HEADER -->
+    <header class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-flask text-blue-600 text-2xl"></i>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-900">Test Auth API</h1>
+                        <p class="text-sm text-gray-600">TechStore Pro - Pruebas de Autenticación</p>
+                    </div>
+                </div>
+                <a href="index.html" class="text-gray-600 hover:text-blue-600 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Volver
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-4xl mx-auto px-4 py-8">
+        
+        <!-- Card de Instrucciones -->
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-6">
+            
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                    <i class="fas fa-vial text-blue-600 text-xl"></i>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">Página de Pruebas</h2>
+                    <p class="text-gray-600">Abre la consola del navegador (F12) para ejecutar las pruebas</p>
+                </div>
+            </div>
+
+            <!-- Instrucciones -->
+            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                <div class="flex">
+                    <i class="fas fa-info-circle text-blue-500 mt-1 mr-3"></i>
+                    <div>
+                        <h3 class="font-semibold text-blue-900 mb-2">Cómo usar esta página:</h3>
+                        <ol class="list-decimal list-inside space-y-1 text-sm text-blue-800">
+                            <li>Presiona <kbd class="px-2 py-1 bg-white rounded border">F12</kbd> para abrir DevTools</li>
+                            <li>Ve a la pestaña <strong>Console</strong></li>
+                            <li>Deberías ver los logs de auth-api.js cargándose</li>
+                            <li>Sigue las pruebas del manual paso a paso</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comandos Disponibles -->
+            <div class="bg-gray-50 rounded-lg p-6">
+                <h3 class="font-semibold text-gray-900 mb-4 flex items-center">
+                    <i class="fas fa-terminal text-gray-600 mr-2"></i>
+                    Comandos disponibles en la consola:
+                </h3>
+                
+                <div class="space-y-3">
+                    <div class="bg-white p-3 rounded border border-gray-200">
+                        <code class="text-sm text-blue-600 font-mono block mb-1">authAPI</code>
+                        <p class="text-xs text-gray-600">Ver instancia de AuthAPI</p>
+                    </div>
+                    
+                    <div class="bg-white p-3 rounded border border-gray-200">
+                        <code class="text-sm text-blue-600 font-mono block mb-1">authAPI.isAuthenticated()</code>
+                        <p class="text-xs text-gray-600">Verificar si hay sesión activa</p>
+                    </div>
+                    
+                    <div class="bg-white p-3 rounded border border-gray-200">
+                        <code class="text-sm text-blue-600 font-mono block mb-1">authAPI.getUser()</code>
+                        <p class="text-xs text-gray-600">Obtener datos del usuario logueado</p>
+                    </div>
+                    
+                    <div class="bg-white p-3 rounded border border-gray-200">
+                        <code class="text-sm text-blue-600 font-mono block mb-1">authAPI.getToken()</code>
+                        <p class="text-xs text-gray-600">Obtener token JWT</p>
+                    </div>
+                    
+                    <div class="bg-white p-3 rounded border border-gray-200">
+                        <code class="text-sm text-blue-600 font-mono block mb-1">authAPI.logout()</code>
+                        <p class="text-xs text-gray-600">Cerrar sesión</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Card de Estado -->
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
+                <i class="fas fa-heartbeat text-green-500 mr-2"></i>
+                Estado del Sistema
+            </h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- Backend Status -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Backend</span>
+                        <span id="backend-status" class="text-xs px-2 py-1 bg-gray-200 text-gray-600 rounded">
+                            Verificando...
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-500">http://localhost:5000</p>
+                </div>
+
+                <!-- Auth API Status -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Auth API</span>
+                        <span id="authapi-status" class="text-xs px-2 py-1 bg-green-100 text-green-600 rounded">
+                            Cargado ✓
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-500">window.authAPI</p>
+                </div>
+
+                <!-- Session Status -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Sesión</span>
+                        <span id="session-status" class="text-xs px-2 py-1 bg-red-100 text-red-600 rounded">
+                            No iniciada
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-500" id="user-email">No hay usuario</p>
+                </div>
+
+                <!-- Token Status -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Token JWT</span>
+                        <span id="token-status" class="text-xs px-2 py-1 bg-gray-200 text-gray-600 rounded">
+                            No disponible
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-500">localStorage</p>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="max-w-4xl mx-auto px-4 py-6 text-center text-gray-500 text-sm">
+        <p>
+            <i class="fas fa-flask mr-1"></i>
+            Página de Pruebas - TechStore Pro | 
+            <span class="text-blue-600">Manual 5-1A</span>
+        </p>
+    </footer>
+
+    <!-- Cargar auth-api.js -->
+    <script src="../scripts/auth-api.js"></script>
+
+    <!-- Script para actualizar estado en la página -->
+    <script>
+        console.log('🧪 Página de pruebas inicializada');
+
+        // Función para actualizar el estado en la UI
+        function updateStatus() {
+            // Verificar sesión
+            const isAuth = authAPI.isAuthenticated();
+            const user = authAPI.getUser();
+            const token = authAPI.getToken();
+
+            // Actualizar Session Status
+            const sessionStatus = document.getElementById('session-status');
+            const userEmail = document.getElementById('user-email');
+            
+            if (isAuth && user) {
+                sessionStatus.textContent = 'Activa ✓';
+                sessionStatus.className = 'text-xs px-2 py-1 bg-green-100 text-green-600 rounded';
+                userEmail.textContent = user.email;
+            } else {
+                sessionStatus.textContent = 'No iniciada';
+                sessionStatus.className = 'text-xs px-2 py-1 bg-red-100 text-red-600 rounded';
+                userEmail.textContent = 'No hay usuario';
+            }
+
+            // Actualizar Token Status
+            const tokenStatus = document.getElementById('token-status');
+            if (token) {
+                tokenStatus.textContent = 'Disponible ✓';
+                tokenStatus.className = 'text-xs px-2 py-1 bg-green-100 text-green-600 rounded';
+            } else {
+                tokenStatus.textContent = 'No disponible';
+                tokenStatus.className = 'text-xs px-2 py-1 bg-gray-200 text-gray-600 rounded';
+            }
+        }
+
+        // Verificar backend
+        async function checkBackend() {
+            const backendStatus = document.getElementById('backend-status');
+            try {
+                const response = await fetch('http://localhost:5000/api/health');
+                if (response.ok) {
+                    backendStatus.textContent = 'Online ✓';
+                    backendStatus.className = 'text-xs px-2 py-1 bg-green-100 text-green-600 rounded';
+                } else {
+                    backendStatus.textContent = 'Error';
+                    backendStatus.className = 'text-xs px-2 py-1 bg-red-100 text-red-600 rounded';
+                }
+            } catch (error) {
+                backendStatus.textContent = 'Offline ✗';
+                backendStatus.className = 'text-xs px-2 py-1 bg-red-100 text-red-600 rounded';
+            }
+        }
+
+        // Actualizar estado inicial
+        updateStatus();
+        checkBackend();
+
+        // Escuchar eventos de login/logout
+        window.addEventListener('userLoggedIn', updateStatus);
+        window.addEventListener('userLoggedOut', updateStatus);
+
+        // Actualizar cada 2 segundos
+        setInterval(updateStatus, 2000);
+
+        console.log('✅ Página de pruebas lista');
+        console.log('💡 Ejecuta las pruebas del manual en la consola');
+    </script>
+
+</body>
+</html>

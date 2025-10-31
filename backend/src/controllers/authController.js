@@ -62,19 +62,21 @@ const register = async (req, res, next) => {
         });
         
         await user.save();
-        // ✨ NUEVO: Log de auditoría
-logger.audit('USER_REGISTERED', {
-    userId: User._id,
-    email: User.email,
-    role: User.role,
-    ip: req.ip,
-    userAgent: req.get('user-agent')
-});
+        
+        // ✅ CORREGIDO: Usar 'user' (minúscula) en vez de 'User' (mayúscula)
+        logger.audit('USER_REGISTERED', {
+            userId: user._id,
+            email: user.email,
+            role: user.role,
+            ip: req.ip,
+            userAgent: req.get('user-agent')
+        });
 
-logger.info('Usuario creado', { 
-    email: User.email, 
-    role: User.role 
-});
+        logger.info('Usuario creado', { 
+            email: user.email, 
+            role: user.role 
+        });
+        
         console.log(`✅ Usuario creado: ${user.email} (${user.role})`);
         
         // GENERAR TOKEN JWT
@@ -139,7 +141,6 @@ const login = async (req, res, next) => {
         const user = await User.findByCredentials(email);
         
         if (!user) {
-            // ✨ NUEVO: Log de advertencia
             logger.warn('Login failed - User not found', {
                 email,
                 ip: req.ip
@@ -197,7 +198,7 @@ const login = async (req, res, next) => {
         
         // GENERAR TOKEN JWT
         const token = user.generateAuthToken();
-        // ✨ NUEVO: Log de auditoría
+        
         logger.audit('USER_LOGIN', {
             userId: user._id,
             email: user.email,

@@ -14,7 +14,8 @@ const {
     getProductById,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getFeaturedProducts  // ← NUEVO CONTROLADOR
 } = require('../controllers/productController');
 
 console.log('🛣️ Inicializando rutas de productos TechStore Pro');
@@ -22,6 +23,14 @@ console.log('🛣️ Inicializando rutas de productos TechStore Pro');
 // =============================================
 // RUTAS PÚBLICAS (NO REQUIEREN AUTENTICACIÓN)
 // =============================================
+
+/**
+ * @route   GET /api/products/destacados
+ * @desc    Obtener productos destacados para el index
+ * @access  Público
+ * ⚠️ IMPORTANTE: Esta ruta DEBE estar ANTES de '/:id'
+ */
+router.get('/destacados', getFeaturedProducts);
 
 /**
  * @route   GET /api/products
@@ -43,7 +52,6 @@ router.get('/:id', getProductById);
 // =============================================
 // RUTAS DE ADMINISTRACIÓN (REQUIEREN AUTH)
 // =============================================
-// TODO: En futuras partes agregaremos middleware de autenticación
 
 /**
  * @route   POST /api/products
@@ -80,7 +88,6 @@ router.delete('/:id', protect, authorize('admin'), deleteProduct);
  * @params  category: laptops|smartphones|tablets|components
  */
 router.get('/category/:category', (req, res, next) => {
-    // Agregar categoría a query params y usar controlador principal
     req.query.category = req.params.category;
     getAllProducts(req, res, next);
 });
@@ -108,6 +115,7 @@ router.get('/search/:query', (req, res, next) => {
 });
 
 console.log('✅ Rutas de productos configuradas:');
+console.log('   ⭐ GET /api/products/destacados - Productos destacados');  // ← NUEVO
 console.log('   📱 GET /api/products - Lista con filtros');
 console.log('   🔍 GET /api/products/:id - Detalle individual');
 console.log('   ➕ POST /api/products - Crear producto');

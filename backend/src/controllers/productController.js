@@ -7,6 +7,62 @@ const Product = require('../models/products');
 console.log('🎮 Controlador de productos TechStore inicializado');
 
 // =============================================
+// FUNCIÓN NUEVA: OBTENER PRODUCTOS DESTACADOS
+// =============================================
+
+const getFeaturedProducts = async (req, res, next) => {
+    try {
+        console.log('⭐ Obteniendo productos destacados para index.html');
+
+        // Buscar productos destacados disponibles
+        const products = await Product.find({
+            featured: true,        // Marcados como destacados
+            inStock: true,         // Que tengan stock
+            status: 'active'       // Activos
+        })
+        .sort({ 
+            salesCount: -1,        // Más vendidos primero
+            'rating.average': -1,  // Mejor rating
+            createdAt: -1          // Más recientes
+        })
+        .limit(6)                  // Máximo 6 productos
+        .select('-keywords');       // Excluir keywords
+
+        console.log(`✅ ${products.length} productos destacados encontrados`);
+
+        // Si no hay productos destacados, buscar los más vendidos
+        if (products.length === 0) {
+            console.log('⚠️ No hay productos destacados, buscando más vendidos...');
+            
+            const bestSellers = await Product.find({
+                inStock: true,
+                status: 'active'
+            })
+            .sort({ salesCount: -1, 'rating.average': -1 })
+            .limit(6)
+            .select('-keywords');
+
+            return res.status(200).json({
+                success: true,
+                count: bestSellers.length,
+                data: bestSellers,
+                message: 'Mostrando productos más vendidos'
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            count: products.length,
+            data: products
+        });
+
+    } catch (error) {
+        console.error(`❌ Error getFeaturedProducts: ${error.message}`);
+        next(error);
+    }
+};
+
+// =============================================
 // FUNCIÓN 1: OBTENER TODOS LOS PRODUCTOS
 // =============================================
 
@@ -167,7 +223,7 @@ const createProduct = async (req, res, next) => {
         res.status(201).json({
             success: true,
             message: 'Producto creado exitosamente',
-            data: product.toObject() // Convertir a objeto plano
+            data: product.toObject()
         });
 
     } catch (error) {
@@ -273,7 +329,8 @@ module.exports = {
     getProductById,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getFeaturedProducts  // ← NUEVA FUNCIÓN EXPORTADA
 };
 
-console.log('✅ Controlador exportado: 5 funciones CRUD disponibles');
+console.log('✅ Controlador exportado: 6 funciones disponibles (incluye getFeaturedProducts)');

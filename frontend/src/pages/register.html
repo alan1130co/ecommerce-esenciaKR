@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse - EsenciaPerfumeríaKR</title>
+    <meta name="description" content="Crea tu cuenta en EsenciaPerfumeríaKR">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            min-height: 100vh;
+        }
+
+        .register-container {
+            background: white;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .register-side {
+            padding: 3rem;
+            background: white;
+        }
+
+        .image-side {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .perfume-illustration {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .diamond-icon {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            filter: drop-shadow(0 10px 30px rgba(255, 255, 255, 0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .brand-text {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .brand-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+        }
+
+        .luxury-input {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .luxury-input:focus {
+            background: white;
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+            outline: none;
+        }
+
+        .luxury-input.error,
+        .luxury-input.input-error {
+            border-color: #ef4444;
+            background: #fef2f2;
+        }
+
+        .luxury-input.error:focus,
+        .luxury-input.input-error:focus {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-social {
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .btn-social:hover {
+            border-color: #a855f7;
+            background: #faf5ff;
+            transform: translateY(-2px);
+        }
+
+        .link-purple {
+            color: #7c3aed;
+            transition: color 0.3s ease;
+            font-weight: 600;
+        }
+
+        .link-purple:hover {
+            color: #a855f7;
+        }
+
+        .eye-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .animate-shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @media (max-width: 768px) {
+            .register-container {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+            .image-side {
+                display: none;
+            }
+            .register-side {
+                padding: 2rem;
+            }
+        }
+
+        .success-toast {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .password-requirements {
+            background: #f9fafb;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        .requirement {
+            display: flex;
+            align-items: center;
+            font-size: 0.813rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .requirement:last-child {
+            margin-bottom: 0;
+        }
+
+        .requirement.valid {
+            color: #10b981;
+        }
+
+        .requirement .icon {
+            width: 18px;
+            height: 18px;
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+            font-weight: bold;
+        }
+
+        .requirement .check {
+            color: #10b981;
+        }
+
+        .requirement .cross {
+            color: #9ca3af;
+        }
+
+        .logo-header {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .logo-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.25rem;
+        }
+
+        .logo-subtitle {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #a855f7;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+    
+    <!-- Container principal -->
+    <div class="register-container fade-in">
+        
+        <!-- Lado del formulario -->
+        <div class="register-side">
+            
+            <!-- Logo y Título -->
+            <div class="logo-header">
+                <h1 class="logo-title">Crear Cuenta</h1>
+                <h2 class="logo-subtitle">EsenciaPerfumeríaKR</h2>
+            </div>
+
+            <!-- Formulario -->
+            <form id="register-form" class="space-y-4">
+                
+                <!-- Nombre y Apellido en dos columnas -->
+                <div class="grid grid-cols-2 gap-3">
+                    <!-- Nombre -->
+                    <div>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700 mb-2">
+                            Nombre
+                        </label>
+                        <input 
+                            type="text" 
+                            id="firstName" 
+                            required
+                            placeholder="Tu nombre"
+                            class="luxury-input w-full px-4 py-3 rounded-lg text-gray-900 font-medium"
+                        >
+                        <p id="firstName-error" class="text-xs text-red-500 mt-1 hidden"></p>
+                    </div>
+
+                    <!-- Apellido -->
+                    <div>
+                        <label for="lastName" class="block text-sm font-medium text-gray-700 mb-2">
+                            Apellido
+                        </label>
+                        <input 
+                            type="text" 
+                            id="lastName" 
+                            required
+                            placeholder="Tu apellido"
+                            class="luxury-input w-full px-4 py-3 rounded-lg text-gray-900 font-medium"
+                        >
+                        <p id="lastName-error" class="text-xs text-red-500 mt-1 hidden"></p>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                        Correo electrónico
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        required
+                        placeholder="tu@email.com"
+                        class="luxury-input w-full px-4 py-3 rounded-lg text-gray-900 font-medium"
+                    >
+                    <p id="email-error" class="text-xs text-red-500 mt-1 hidden"></p>
+                </div>
+
+                <!-- Teléfono -->
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+                        Teléfono
+                    </label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        required
+                        placeholder="3001234567"
+                        maxlength="10"
+                        class="luxury-input w-full px-4 py-3 rounded-lg text-gray-900 font-medium"
+                    >
+                    <p id="phone-error" class="text-xs text-red-500 mt-1 hidden"></p>
+                </div>
+
+                <!-- Contraseña -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                        Contraseña
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            required
+                            placeholder="••••••••"
+                            class="luxury-input w-full px-4 py-3 rounded-lg pr-12 text-gray-900 font-medium"
+                        >
+                        <button 
+                            type="button" 
+                            id="toggle-password"
+                            class="eye-toggle text-gray-500 hover:text-purple-700 transition-colors p-1 rounded-md hover:bg-purple-50"
+                        >
+                            <svg id="eye-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <svg id="eye-closed" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"/>
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Password requirements -->
+                    <div class="password-requirements hidden" id="password-requirements">
+                        <p class="text-xs font-bold text-gray-700 mb-2">Tu contraseña debe tener:</p>
+                        <div class="requirement" id="req-length">
+                            <span class="icon cross">✗</span>
+                            <span>Mínimo 8 caracteres</span>
+                        </div>
+                        <div class="requirement" id="req-uppercase">
+                            <span class="icon cross">✗</span>
+                            <span>Una letra mayúscula</span>
+                        </div>
+                        <div class="requirement" id="req-lowercase">
+                            <span class="icon cross">✗</span>
+                            <span>Una letra minúscula</span>
+                        </div>
+                        <div class="requirement" id="req-number">
+                            <span class="icon cross">✗</span>
+                            <span>Un número</span>
+                        </div>
+                    </div>
+                    <p id="password-error" class="text-xs text-red-500 mt-1 hidden"></p>
+                </div>
+
+                <!-- Confirmar contraseña -->
+                <div>
+                    <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-2">
+                        Confirmar contraseña
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            required
+                            placeholder="••••••••"
+                            class="luxury-input w-full px-4 py-3 rounded-lg pr-12 text-gray-900 font-medium"
+                        >
+                        <button 
+                            type="button" 
+                            id="toggle-confirm-password"
+                            class="eye-toggle text-gray-500 hover:text-purple-700 transition-colors p-1 rounded-md hover:bg-purple-50"
+                        >
+                            <svg id="eye-open-2" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <svg id="eye-closed-2" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <p id="confirmPassword-error" class="text-xs text-red-500 mt-1 hidden"></p>
+                </div>
+
+                <!-- Términos y condiciones -->
+                <div class="flex items-start">
+                    <input 
+                        type="checkbox" 
+                        id="terms" 
+                        required
+                        class="mt-1 mr-3 h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+                    >
+                    <label for="terms" class="text-sm text-gray-700">
+                        Acepto los <a href="#" class="link-purple">términos y condiciones</a> y la <a href="#" class="link-purple">política de privacidad</a>
+                    </label>
+                </div>
+                <p id="terms-error" class="text-xs text-red-500 mt-1 hidden"></p>
+
+                <!-- Error general -->
+                <div id="register-error" class="hidden bg-red-50 border-l-4 border-red-500 text-red-800 px-4 py-3 rounded-lg">
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        <span id="error-message" class="text-sm font-medium"></span>
+                    </div>
+                </div>
+
+                <!-- Botón submit -->
+                <button 
+                    type="submit" 
+                    id="register-btn"
+                    class="btn-primary w-full text-white py-3.5 px-6 rounded-lg font-bold text-base shadow-lg"
+                >
+                    Crear Cuenta
+                </button>
+            </form>
+
+            <!-- Divisor -->
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t-2 border-gray-200"></div>
+                </div>
+                <div class="relative flex justify-center text-sm">
+                    <span class="px-4 bg-white text-gray-500 font-medium">O regístrate con</span>
+                </div>
+            </div>
+
+            <!-- Botones sociales -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <!-- Google -->
+                <button type="button" class="btn-social flex items-center justify-center px-4 py-3 rounded-lg font-medium">
+                    <svg class="w-5 h-5 mr-2" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span class="text-sm font-semibold text-gray-700">Google</span>
+                </button>
+
+                <!-- Facebook -->
+                <button type="button" class="btn-social flex items-center justify-center px-4 py-3 rounded-lg font-medium">
+                    <svg class="w-5 h-5 mr-2" fill="#1877F2" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                    <span class="text-sm font-semibold text-gray-700">Facebook</span>
+                </button>
+            </div>
+
+            <!-- Ya tienes cuenta -->
+            <div class="text-center text-sm text-gray-600">
+                ¿Ya tienes cuenta? 
+                <a href="login.html" class="link-purple">Inicia sesión</a>
+            </div>
+        </div>
+
+        <!-- Lado de la imagen - PURPLE THEME -->
+        <div class="image-side">
+            <div class="perfume-illustration">
+                <svg class="diamond-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="diamondGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#60a5fa;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#3b82f6;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" />
+                        </linearGradient>
+                        <linearGradient id="diamondLight" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#93c5fd;stop-opacity:0.8" />
+                            <stop offset="100%" style="stop-color:#60a5fa;stop-opacity:0.4" />
+                        </linearGradient>
+                    </defs>
+                    
+                    <polygon points="50,10 20,35 50,35" fill="url(#diamondLight)"/>
+                    <polygon points="50,10 80,35 50,35" fill="url(#diamondGrad)"/>
+                    <polygon points="20,35 10,50 50,35" fill="#3b82f6"/>
+                    <polygon points="50,35 10,50 50,90" fill="#2563eb"/>
+                    <polygon points="80,35 90,50 50,35" fill="#60a5fa"/>
+                    <polygon points="50,35 90,50 50,90" fill="#3b82f6"/>
+                </svg>
+                
+                <h2 class="brand-text">Únete a nosotros</h2>
+                <p class="brand-subtitle">Descubre una experiencia única</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de éxito -->
+    <div id="success-toast" class="hidden fixed top-6 right-6 success-toast text-white rounded-xl shadow-2xl p-6 max-w-sm z-50">
+        <div class="flex items-start">
+            <div class="flex-shrink-0 text-4xl mr-4">
+                ✅
+            </div>
+            <div class="flex-1">
+                <h3 class="text-xl font-bold mb-1">¡Cuenta creada!</h3>
+                <p id="success-name" class="text-white/90 font-medium mb-2"></p>
+                <p class="text-white/80 text-sm">Redirigiendo al inicio...</p>
+            </div>
+        </div>
+        <div class="mt-4 w-full bg-white/30 rounded-full h-1.5">
+            <div class="bg-white h-1.5 rounded-full transition-all duration-[2000ms]" style="width: 0%" id="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- Incluir el auth-api.js -->
+    <script src="../scripts/auth-api.js"></script>
+     <script src="../scripts/session.js"></script>
+      <script src="../scripts/carrito.js"></script>
+
+    <script>
+        console.log('📝 Inicializando registro con backend real');
+
+        if (typeof authAPI === 'undefined') {
+            console.error('❌ ERROR: auth-api.js no se cargó');
+        } else {
+            console.log('✅ auth-api.js cargado');
+        }
+
+        if (authAPI && authAPI.isAuthenticated()) {
+            console.log('⚠️ Usuario ya autenticado');
+            showAuthNotification('Ya tienes una sesión activa', 'info');
+            setTimeout(() => window.location.href = 'index.html', 1000);
+        }
+
+        // Toggle passwords
+        document.getElementById('toggle-password').addEventListener('click', () => {
+            const pwd = document.getElementById('password');
+            const open = document.getElementById('eye-open');
+            const closed = document.getElementById('eye-closed');
+            if (pwd.type === 'password') {
+                pwd.type = 'text';
+                open.classList.add('hidden');
+                closed.classList.remove('hidden');
+            } else {
+                pwd.type = 'password';
+                open.classList.remove('hidden');
+                closed.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('toggle-confirm-password').addEventListener('click', () => {
+            const pwd = document.getElementById('confirmPassword');
+            const open = document.getElementById('eye-open-2');
+            const closed = document.getElementById('eye-closed-2');
+            if (pwd.type === 'password') {
+                pwd.type = 'text';
+                open.classList.add('hidden');
+                closed.classList.remove('hidden');
+            } else {
+                pwd.type = 'password';
+                open.classList.remove('hidden');
+                closed.classList.add('hidden');
+            }
+        });
+
+        // Validaciones
+        const firstNameInput = document.getElementById('firstName');
+        const lastNameInput = document.getElementById('lastName');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        firstNameInput.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+            if (firstNameInput.classList.contains('error')) hideFieldError('firstName');
+        });
+
+        lastNameInput.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+            if (lastNameInput.classList.contains('error')) hideFieldError('lastName');
+        });
+
+        phoneInput.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            if (phoneInput.classList.contains('error')) hideFieldError('phone');
+        });
+
+        emailInput.addEventListener('blur', () => {
+            const email = emailInput.value.trim();
+            if (email && !isValidEmail(email)) {
+                showFieldError('email', 'Ingresa un correo válido');
+            } else {
+                hideFieldError('email');
+            }
+        });
+
+        emailInput.addEventListener('input', () => {
+            if (emailInput.classList.contains('error')) hideFieldError('email');
+        });
+
+        // Password requirements
+        const requirements = {
+            length: { element: document.getElementById('req-length'), test: (pwd) => pwd.length >= 8 },
+            uppercase: { element: document.getElementById('req-uppercase'), test: (pwd) => /[A-Z]/.test(pwd) },
+            lowercase: { element: document.getElementById('req-lowercase'), test: (pwd) => /[a-z]/.test(pwd) },
+            number: { element: document.getElementById('req-number'), test: (pwd) => /[0-9]/.test(pwd) }
+        };
+
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            const requirementsDiv = document.getElementById('password-requirements');
+            
+            if (password.length > 0) {
+                requirementsDiv.classList.remove('hidden');
+            } else {
+                requirementsDiv.classList.add('hidden');
+            }
+            
+            Object.values(requirements).forEach(req => {
+                if (req.test(password)) {
+                    req.element.classList.add('valid');
+                    req.element.querySelector('.icon').classList.remove('cross');
+                    req.element.querySelector('.icon').classList.add('check');
+                    req.element.querySelector('.icon').textContent = '✓';
+                } else {
+                    req.element.classList.remove('valid');
+                    req.element.querySelector('.icon').classList.remove('check');
+                    req.element.querySelector('.icon').classList.add('cross');
+                    req.element.querySelector('.icon').textContent = '✗';
+                }
+            });
+
+            if (passwordInput.classList.contains('error')) {
+                hideFieldError('password');
+            }
+        });
+
+        // Validar confirmación de contraseña en tiempo real
+        confirmPasswordInput.addEventListener('input', () => {
+            if (confirmPasswordInput.classList.contains('error')) {
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                
+                if (confirmPassword && password === confirmPassword) {
+                    hideFieldError('confirmPassword');
+                }
+            }
+        });
+
+        // Form validation and submit
+        const form = document.getElementById('register-form');
+        const registerBtn = document.getElementById('register-btn');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const firstName = firstNameInput.value.trim();
+            const lastName = lastNameInput.value.trim();
+            const email = emailInput.value.trim();
+            const phone = phoneInput.value;
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+            const termsAccepted = document.getElementById('terms').checked;
+
+            // Limpiar errores previos
+            hideAllErrors();
+
+            // Validaciones
+            let hasErrors = false;
+
+            if (!firstName) {
+                showFieldError('firstName', 'El nombre es obligatorio');
+                hasErrors = true;
+            } else if (firstName.length < 3) {
+                showFieldError('firstName', 'El nombre debe tener al menos 3 caracteres');
+                hasErrors = true;
+            }
+
+            if (!lastName) {
+                showFieldError('lastName', 'El apellido es obligatorio');
+                hasErrors = true;
+            } else if (lastName.length < 4) {
+                showFieldError('lastName', 'El apellido debe tener al menos 4 caracteres');
+                hasErrors = true;
+            }
+
+            if (!email) {
+                showFieldError('email', 'El correo es obligatorio');
+                hasErrors = true;
+            } else if (!isValidEmail(email)) {
+                showFieldError('email', 'Ingresa un correo válido');
+                hasErrors = true;
+            }
+
+            if (!phone) {
+                showFieldError('phone', 'El teléfono es obligatorio');
+                hasErrors = true;
+            } else if (phone.length !== 10) {
+                showFieldError('phone', 'El teléfono debe tener 10 dígitos');
+                hasErrors = true;
+            } else if (!phone.startsWith('3')) {
+                showFieldError('phone', 'El teléfono debe comenzar con 3');
+                hasErrors = true;
+            }
+
+            if (!password) {
+                showFieldError('password', 'La contraseña es obligatoria');
+                hasErrors = true;
+            } else {
+                const allRequirementsMet = Object.values(requirements).every(req => req.test(password));
+                if (!allRequirementsMet) {
+                    showFieldError('password', 'La contraseña no cumple con todos los requisitos');
+                    hasErrors = true;
+                }
+            }
+
+            if (!confirmPassword) {
+                showFieldError('confirmPassword', 'Debes confirmar tu contraseña');
+                hasErrors = true;
+            } else if (password !== confirmPassword) {
+                showFieldError('confirmPassword', 'Las contraseñas no coinciden');
+                hasErrors = true;
+            }
+
+            if (!termsAccepted) {
+                showFieldError('terms', 'Debes aceptar los términos y condiciones');
+                hasErrors = true;
+            }
+
+            if (hasErrors) {
+                showError('Por favor corrige los errores antes de continuar');
+                return;
+            }
+
+            // Deshabilitar botón y mostrar loading
+            const originalText = registerBtn.innerHTML;
+            registerBtn.disabled = true;
+            registerBtn.innerHTML = '<svg class="w-6 h-6 inline mr-2 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>Creando cuenta...';
+
+            try {
+                // Preparar datos de usuario
+                const userData = {
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    password
+                };
+
+                // Llamar a la API
+                const result = await authAPI.register(userData);
+
+                if (result.success) {
+                    console.log('✅ Registro exitoso');
+                    
+                    // Mostrar mensaje de éxito
+                    showSuccess(`${firstName} ${lastName}`);
+                    
+                    // Redirigir después de 2 segundos
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 2000);
+
+                } else {
+                    console.error('❌ Error en registro:', result.error);
+                    
+                    // Mostrar error específico
+                    let errorMessage = result.error;
+                    
+                    if (result.error.includes('email') || result.error.includes('correo')) {
+                        showFieldError('email', 'Este correo ya está registrado');
+                        errorMessage = 'El correo electrónico ya está en uso';
+                    }
+                    
+                    showError(errorMessage);
+
+                    // Restaurar botón
+                    registerBtn.disabled = false;
+                    registerBtn.innerHTML = originalText;
+                }
+
+            } catch (error) {
+                console.error('❌ Error inesperado:', error);
+                showError('Error de conexión. Por favor intenta de nuevo.');
+                
+                // Restaurar botón
+                registerBtn.disabled = false;
+                registerBtn.innerHTML = originalText;
+            }
+        });
+
+        // Funciones auxiliares
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function showFieldError(field, message) {
+            const input = document.getElementById(field);
+            const errorElement = document.getElementById(`${field}-error`);
+            
+            if (input) {
+                input.classList.add('error', 'input-error');
+            }
+            
+            if (errorElement) {
+                errorElement.textContent = message;
+                errorElement.classList.remove('hidden');
+            }
+        }
+
+        function hideFieldError(field) {
+            const input = document.getElementById(field);
+            const errorElement = document.getElementById(`${field}-error`);
+            
+            if (input) {
+                input.classList.remove('error', 'input-error');
+            }
+            
+            if (errorElement) {
+                errorElement.classList.add('hidden');
+            }
+        }
+
+        function hideAllErrors() {
+            hideFieldError('firstName');
+            hideFieldError('lastName');
+            hideFieldError('email');
+            hideFieldError('phone');
+            hideFieldError('password');
+            hideFieldError('confirmPassword');
+            hideFieldError('terms');
+            document.getElementById('register-error').classList.add('hidden');
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('register-error');
+            const errorMsg = document.getElementById('error-message');
+            errorMsg.textContent = message;
+            errorDiv.classList.remove('hidden');
+            errorDiv.classList.add('animate-shake');
+            
+            setTimeout(() => {
+                errorDiv.classList.remove('animate-shake');
+            }, 500);
+            
+            setTimeout(() => {
+                errorDiv.classList.add('hidden');
+            }, 6000);
+        }
+
+        function showSuccess(name) {
+            const toast = document.getElementById('success-toast');
+            const nameElement = document.getElementById('success-name');
+            const progressBar = document.getElementById('progress-bar');
+            
+            nameElement.textContent = `¡Bienvenido/a, ${name}!`;
+            toast.classList.remove('hidden');
+            
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 100);
+        }
+
+        console.log('✅ Registro inicializado correctamente');
+    </script>
+</body>
+</html>

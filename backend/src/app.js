@@ -296,13 +296,21 @@ app.get('/api/health', (req, res) => {
 // =============================================
 // RUTAS DE LA API - TECHSTORE PRO
 // =============================================
+
+// Rutas de productos
 app.use('/api/products', require('./routes/products'));
+
+// Rutas de autenticación
 app.use('/api/auth', require('./routes/auth'));
+
+// Rutas de pedidos ⭐ NUEVO
+app.use('/api/orders', require('./routes/orders'));
 
 console.log('✅ Rutas API configuradas:');
 console.log('   📱 /api/products - Gestión de productos');
 console.log('   🔐 /api/auth - Autenticación y usuarios');
-console.log('   🥇 /api/health - Estado del servidor');
+console.log('   📦 /api/orders - Gestión de pedidos');  // ⭐ NUEVO
+console.log('   🏥 /api/health - Estado del servidor')
 
 // Middleware para rutas no encontradas (404)
 app.use(notFound);

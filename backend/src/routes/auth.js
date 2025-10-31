@@ -5,14 +5,14 @@
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');
-const { authLimiter } = require('../middleware/rateLimiter'); // ✨ NUEVO
+const { authLimiter } = require('../middleware/rateLimiter');
 const { verificarToken } = require('../middleware/auth');
 const { 
     registerValidation, 
     loginValidation, 
     updateProfileValidation,
     handleValidationErrors 
-} = require('../validators/authValidators');  // ✨ NUEVO
+} = require('../validators/authValidators');
 
 // Importar controladores
 const {
@@ -34,12 +34,11 @@ console.log('🔐 Inicializando rutas de autenticación');
  * @access  Público
  * @body    { firstName, lastName, email, password, phone?, role? }
  */
-// Registro con validación
 router.post('/register', 
-    authLimiter,              // 1. Rate limiting
-    registerValidation,        // 2. Validar datos
-    handleValidationErrors,    // 3. Manejar errores
-    authController.register    // 4. Controlador
+    authLimiter,
+    registerValidation,
+    handleValidationErrors,
+    authController.register
 );
 
 /**
@@ -48,7 +47,6 @@ router.post('/register',
  * @access  Público
  * @body    { email, password }
  */
-// Login con validación
 router.post('/login', 
     authLimiter,
     loginValidation,
@@ -59,8 +57,6 @@ router.post('/login',
 // =============================================
 // RUTAS PRIVADAS (REQUIEREN AUTENTICACIÓN)
 // =============================================
-// TODO: En Parte 3C3 agregaremos middleware de autenticación
-// Por ahora funcionan sin middleware para testing
 
 /**
  * @route   GET /api/auth/profile
@@ -68,13 +64,7 @@ router.post('/login',
  * @access  Privado (requiere token)
  * @query   userId (temporal para testing)
  */
-
-// Actualizar perfil con validación
-router.put('/profile',
-    updateProfileValidation,
-    handleValidationErrors,
-    updateProfile
-);
+router.get('/profile', getProfile);  // ✅ RUTA AGREGADA
 
 /**
  * @route   PUT /api/auth/profile
@@ -83,7 +73,11 @@ router.put('/profile',
  * @query   userId (temporal para testing)
  * @body    { firstName?, lastName?, phone?, address?, etc }
  */
-router.put('/profile', updateProfile);
+router.put('/profile',
+    updateProfileValidation,
+    handleValidationErrors,
+    updateProfile
+);
 
 // =============================================
 // LOG DE RUTAS CONFIGURADAS
